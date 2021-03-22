@@ -33,8 +33,8 @@ class CabInvoiceGeneratorTest {
 
     @Test
     public void givenMultipleRidesShouldReturnTotalFare() {
-        Rides[] rides = {new Rides(1.0, 5),
-                new Rides(0.2, 2)};
+        Rides[] rides = {new Rides(1.0, 5,PrimiumRides.Normal),
+                new Rides(0.2, 2,PrimiumRides.Normal)};
 
         double totalFare = cabInvoiceGenerator.calculateFare(rides);
         Assertions.assertEquals(20, totalFare, 0.0);
@@ -42,8 +42,8 @@ class CabInvoiceGeneratorTest {
 
     @Test
     public void ReturnTotalRidesTotalFareandAverageFareperRide() {
-        Rides[] rides = {new Rides(1.0, 5),
-                new Rides(0.2, 2)};
+        Rides[] rides = {new Rides(1.0, 5,PrimiumRides.Normal),
+                new Rides(0.2, 2,PrimiumRides.Normal)};
 
         double totalFare = cabInvoiceGenerator.calculateFare(rides);
         int noOfRides = cabInvoiceGenerator.numberOfRides(rides);
@@ -57,8 +57,23 @@ class CabInvoiceGeneratorTest {
     @Test
     public void givenUserIdReturntheInvoice() {
         String userID = "Driver1";
-        Rides[] rides = new Rides[]{new Rides(1.0, 5),
-                new Rides(0.2, 2)
+        Rides[] rides = new Rides[]{new Rides(1.0, 5, PrimiumRides.Normal),
+                new Rides(0.2, 2,PrimiumRides.Normal)
+        };
+
+
+        cabInvoiceGenerator.addRides(userID, rides);
+        double rideDetails = cabInvoiceGenerator.getRidesDetails(userID);
+        int NoOfRides = cabInvoiceGenerator.numberOfRides(rides);
+        Assertions.assertEquals(20, rideDetails, 0.0);
+
+
+    }
+    @Test
+    public void addingPremiumAndNormalRide() {
+        String userID = "Driver1";
+        Rides[] rides = new Rides[]{new Rides(1.0, 5, PrimiumRides.Normal),
+                new Rides(0.2, 2,PrimiumRides.PREMIUM)
         };
 
 
