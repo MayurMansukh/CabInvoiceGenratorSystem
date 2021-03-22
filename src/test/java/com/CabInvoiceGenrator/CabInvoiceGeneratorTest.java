@@ -6,10 +6,10 @@ import org.junit.jupiter.api.Test;
 
 class CabInvoiceGeneratorTest {
 
-    CabInvoiceGenerator cabInvoiceGenerator;
+    static CabInvoiceGenerator cabInvoiceGenerator;
 
     @BeforeAll
-    void set(){
+    static void set(){
         cabInvoiceGenerator=new CabInvoiceGenerator();
     }
     @Test
@@ -22,5 +22,19 @@ class CabInvoiceGeneratorTest {
     void CalculateFareFalseTest() {
         double totalFare = cabInvoiceGenerator.calculateFare(1.0, 5);
         Assertions.assertEquals(5, totalFare, 0);
+    }  @Test
+    public void givenDistanceAndTimeInvoiceGeneratorShouldReturnMinimumFare() {
+        double totalFare = cabInvoiceGenerator.calculateFare(0.2, 2);
+        Assertions.assertEquals(5, totalFare, 0.0);
     }
+
+    @Test
+    public void givenMultipleRidesShouldReturnTotalFare() {
+        Rides[] rides = { new Rides(1.0,5),
+                new Rides(0.2,2)};
+
+        double totalFare = cabInvoiceGenerator.calculateFare(rides);
+        Assertions.assertEquals(20, totalFare, 0.0);
+    }
+
 }
